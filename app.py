@@ -63,8 +63,6 @@ def init_db():
 # ==========================================
 # INITIALIZE DATABASE
 # ==========================================
-# This runs when Flask starts,
-# including Render / Gunicorn.
 
 init_db()
 
@@ -178,7 +176,7 @@ def dashboard():
 
 
 # ==========================================
-# LOAN PREDICTION PAGE
+# LOAN PREDICTION
 # ==========================================
 
 @app.route("/predict", methods=["GET", "POST"])
@@ -231,27 +229,27 @@ def predict():
         # ENCODE CATEGORICAL DATA
         # ==========================================
 
-        gender = gender_encoder.transform(
+        gender_encoded = gender_encoder.transform(
             [gender]
         )[0]
 
-        married = married_encoder.transform(
+        married_encoded = married_encoder.transform(
             [married]
         )[0]
 
-        dependents = dependents_encoder.transform(
+        dependents_encoded = dependents_encoder.transform(
             [dependents]
         )[0]
 
-        education = education_encoder.transform(
+        education_encoded = education_encoder.transform(
             [education]
         )[0]
 
-        self_employed = self_employed_encoder.transform(
+        self_employed_encoded = self_employed_encoder.transform(
             [self_employed]
         )[0]
 
-        property_area = property_area_encoder.transform(
+        property_area_encoded = property_area_encoder.transform(
             [property_area]
         )[0]
 
@@ -262,17 +260,17 @@ def predict():
 
         input_data = pd.DataFrame(
             [[
-                gender,
-                married,
-                dependents,
-                education,
-                self_employed,
+                gender_encoded,
+                married_encoded,
+                dependents_encoded,
+                education_encoded,
+                self_employed_encoded,
                 applicant_income,
                 coapplicant_income,
                 loan_amount,
                 loan_term,
                 credit_history,
-                property_area
+                property_area_encoded
             ]],
 
             columns=[
@@ -303,12 +301,100 @@ def predict():
 
 
         # ==========================================
+        # POSSIBLE REJECTION FACTORS
+        # ==========================================
+
+        reasons = []
+
+
+        if prediction_result == "Rejected":
+
+            # Credit history
+            if credit_history == 0:
+
+                reasons.append(
+                    "Credit history is not favorable."
+                )
+
+
+            # Income vs loan amount
+            total_income = (
+                applicant_income +
+                coapplicant_income
+            )
+
+            if total_income > 0:
+
+                income_loan_ratio = (
+                    loan_amount / total_income
+                )
+
+                if income_loan_ratio > 0.40:
+
+                    reasons.append(
+                        "Loan amount is relatively high compared with total income."
+                    )
+
+
+            # Applicant income
+            if applicant_income < 30000:
+
+                reasons.append(
+                    "Applicant income may be relatively low for the requested loan."
+                )
+
+
+            # Co-applicant income
+            if (
+                coapplicant_income == 0
+                and applicant_income < 40000
+            ):
+
+                reasons.append(
+                    "There is no co-applicant income and applicant income is relatively low."
+                )
+
+
+            # Education
+            if education == "Not Graduate":
+
+                reasons.append(
+                    "Applicant is not a graduate."
+                )
+
+
+            # Self employed
+            if self_employed == "Yes":
+
+                reasons.append(
+                    "Self-employed status may affect the assessment."
+                )
+
+
+            # Dependents
+            if dependents == "3+":
+
+                reasons.append(
+                    "Higher number of dependents may affect affordability."
+                )
+
+
+            # If no specific factor was found
+            if len(reasons) == 0:
+
+                reasons.append(
+                    "The applicant profile does not sufficiently match patterns learned by the machine learning model."
+                )
+
+
+        # ==========================================
         # RESULT PAGE
         # ==========================================
 
         return render_template(
             "result.html",
-            result=prediction_result
+            result=prediction_result,
+            reasons=reasons
         )
 
 
