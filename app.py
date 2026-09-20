@@ -61,6 +61,14 @@ def init_db():
 
 
 # ==========================================
+# INITIALIZE DATABASE
+# ==========================================
+# Important for Render / Gunicorn
+
+init_db()
+
+
+# ==========================================
 # HOME
 # ==========================================
 
@@ -185,7 +193,9 @@ def predict():
 
     if request.method == "POST":
 
-        # Get form data
+        # ==========================================
+        # GET FORM DATA
+        # ==========================================
 
         gender = request.form["gender"]
 
@@ -224,13 +234,21 @@ def predict():
         # ENCODE CATEGORICAL DATA
         # ==========================================
 
-        gender = gender_encoder.transform([gender])[0]
+        gender = gender_encoder.transform(
+            [gender]
+        )[0]
 
-        married = married_encoder.transform([married])[0]
+        married = married_encoder.transform(
+            [married]
+        )[0]
 
-        dependents = dependents_encoder.transform([dependents])[0]
+        dependents = dependents_encoder.transform(
+            [dependents]
+        )[0]
 
-        education = education_encoder.transform([education])[0]
+        education = education_encoder.transform(
+            [education]
+        )[0]
 
         self_employed = self_employed_encoder.transform(
             [self_employed]
@@ -318,6 +336,7 @@ def logout():
 
 if __name__ == "__main__":
 
-    init_db()
-
-    app.run(debug=True, host="0.0.0.0")
+    app.run(
+        debug=True,
+        host="0.0.0.0"
+    )
