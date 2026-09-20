@@ -63,23 +63,20 @@ def init_db():
 # ==========================================
 # INITIALIZE DATABASE
 # ==========================================
-# Important for Render / Gunicorn
+# This runs when Flask starts,
+# including Render / Gunicorn.
 
 init_db()
 
 
 # ==========================================
-# HOME
+# HOME PAGE
 # ==========================================
 
 @app.route("/")
 def home():
 
-    if "user_id" in session:
-
-        return redirect(url_for("dashboard"))
-
-    return redirect(url_for("login"))
+    return render_template("index.html")
 
 
 # ==========================================
@@ -327,7 +324,7 @@ def logout():
 
     session.clear()
 
-    return redirect(url_for("login"))
+    return redirect(url_for("home"))
 
 
 # ==========================================
