@@ -1,77 +1,212 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
 
-    <title>Prediction Result</title>
+    <meta charset="UTF-8">
 
-    <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='css/styles.css') }}"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Loan Prediction Result</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+
+            font-family: Arial, sans-serif;
+
+            min-height: 100vh;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            background: #f4f6f8;
+
+        }
+
+        .result-container {
+
+            width: 90%;
+
+            max-width: 600px;
+
+            background: white;
+
+            padding: 40px;
+
+            border-radius: 15px;
+
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+
+            text-align: center;
+
+        }
+
+        h1 {
+
+            margin-bottom: 20px;
+
+        }
+
+        .approved {
+
+            color: green;
+
+        }
+
+        .rejected {
+
+            color: red;
+
+        }
+
+        .reasons {
+
+            margin-top: 25px;
+
+            text-align: left;
+
+            background: #fff5f5;
+
+            padding: 20px;
+
+            border-radius: 10px;
+
+        }
+
+        .reasons h2 {
+
+            margin-bottom: 15px;
+
+            color: #333;
+
+        }
+
+        .reasons ul {
+
+            padding-left: 20px;
+
+        }
+
+        .reasons li {
+
+            margin-bottom: 10px;
+
+        }
+
+        .back-button {
+
+            display: inline-block;
+
+            margin-top: 25px;
+
+            padding: 12px 25px;
+
+            background: #ED7942;
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 8px;
+
+        }
+
+        .note {
+
+            margin-top: 20px;
+
+            font-size: 13px;
+
+            color: #666;
+
+        }
+
+    </style>
 
 </head>
 
+
 <body>
 
-<div class="container">
-
-    <div class="form-box">
-
-        <h1>Prediction Result</h1>
-
+    <div class="result-container">
 
         {% if result == "Approved" %}
 
-            <h2 style="color: green;">
-                ✓ Loan Approved
-            </h2>
+            <h1 class="approved">
+                ✅ Loan Approved
+            </h1>
 
             <p>
-                Congratulations! Based on the
-                provided information, the loan
-                is predicted to be approved.
+                Based on the submitted information,
+                the model predicts that the loan may be approved.
             </p>
-
 
         {% else %}
 
-            <h2 style="color: red;">
-                ✗ Loan Rejected
-            </h2>
+            <h1 class="rejected">
+                ❌ Loan Rejected
+            </h1>
 
             <p>
-                Based on the provided information,
-                the loan is predicted to be rejected.
+                Based on the submitted information,
+                the model predicts that the loan may be rejected.
+            </p>
+
+
+            {% if reasons %}
+
+                <div class="reasons">
+
+                    <h2>
+                        Possible Factors
+                    </h2>
+
+                    <ul>
+
+                        {% for reason in reasons %}
+
+                            <li>
+                                {{ reason }}
+                            </li>
+
+                        {% endfor %}
+
+                    </ul>
+
+                </div>
+
+            {% endif %}
+
+
+            <p class="note">
+
+                Note: These are possible factors based on
+                the submitted information and model behavior.
+                They are not an official reason from a bank.
+
             </p>
 
         {% endif %}
 
 
-        <br>
-
-
-        <a href="{{ url_for('predict') }}">
-
-            <button>
-                Try Again
-            </button>
-
-        </a>
-
-
-        <br><br>
-
-
-        <a href="{{ url_for('dashboard') }}">
-
-            Back to Dashboard
-
+        <a
+            href="{{ url_for('predict') }}"
+            class="back-button"
+        >
+            Predict Again
         </a>
 
     </div>
-
-</div>
 
 </body>
 
