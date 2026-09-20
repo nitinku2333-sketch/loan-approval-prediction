@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Prediction Result</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/styles.css') }}"
+    >
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="form-box">
+
+        <h1>Prediction Result</h1>
+
+
+        {% if result == "Approved" %}
+
+            <h2 style="color: green;">
+                ✓ Loan Approved
+            </h2>
+
+            <p>
+                Congratulations! Based on the
+                provided information, the loan
+                is predicted to be approved.
+            </p>
+
+
+        {% else %}
+
+            <h2 style="color: red;">
+                ✗ Loan Rejected
+            </h2>
+
+            <p>
+                Based on the provided information,
+                the loan is predicted to be rejected.
+            </p>
+
+        {% endif %}
+
+
+        <br>
+
+
+        <a href="{{ url_for('predict') }}">
+
+            <button>
+                Try Again
+            </button>
+
+        </a>
+
+
+        <br><br>
+
+
+        <a href="{{ url_for('dashboard') }}">
+
+            Back to Dashboard
+
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

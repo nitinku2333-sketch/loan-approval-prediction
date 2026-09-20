@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register - Loan Approval System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="form-box">
+
+        <h1>Loan Approval</h1>
+        <h2>Create Account</h2>
+
+        <form method="POST">
+
+            <input
+                type="text"
+                name="name"
+                placeholder="Enter your name"
+                required
+            >
+
+            <input
+                type="email"
+                name="email"
+                placeholder="Enter your email"
+                required
+            >
+
+            <input
+                type="password"
+                name="password"
+                placeholder="Enter password"
+                required
+            >
+
+            <button type="submit">Register</button>
+
+        </form>
+
+        <p>
+            Already have an account?
+            <a href="{{ url_for('login') }}">Login</a>
+        </p>
+
+    </div>
+
+</div>
+
+</body>
+</html>

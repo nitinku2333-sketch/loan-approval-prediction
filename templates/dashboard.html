@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Dashboard</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/dashboard.css') }}"
+    >
+
+</head>
+
+<body>
+
+    <div class="dashboard">
+
+        <nav>
+
+            <h2>Loan Approval System</h2>
+
+            <a href="{{ url_for('logout') }}">
+                Logout
+            </a>
+
+        </nav>
+
+
+        <div class="welcome">
+
+            <h1>Welcome, {{ name }}</h1>
+
+            <p>
+                Loan Approval Prediction Dashboard
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>Loan Approval Prediction</h2>
+
+            <p>
+                Enter your loan and applicant details
+                to check the loan approval prediction.
+            </p>
+
+            <a href="{{ url_for('predict') }}">
+
+                <button>
+                    Predict Loan
+                </button>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
