@@ -199,6 +199,99 @@ def login():
 
 
 # ==========================================
+# FORGOT PASSWORD
+# ==========================================
+
+@app.route("/forgot-password", methods=["GET", "POST"])
+def forgot_password():
+
+    if request.method == "POST":
+
+        email = request.form["email"].strip()
+
+        new_password = request.form["new_password"]
+
+        confirm_password = request.form["confirm_password"]
+
+        # --------------------------------------
+        # CHECK EMPTY FIELDS
+        # --------------------------------------
+
+        if not email or not new_password or not confirm_password:
+
+            return "All fields are required!"
+
+        # --------------------------------------
+        # CHECK PASSWORD MATCH
+        # --------------------------------------
+
+        if new_password != confirm_password:
+
+            return "New password and confirm password do not match!"
+
+        # --------------------------------------
+        # CHECK PASSWORD LENGTH
+        # --------------------------------------
+
+        if len(new_password) < 6:
+
+            return "Password must contain at least 6 characters!"
+
+        # --------------------------------------
+        # FIND USER
+        # --------------------------------------
+
+        conn = get_db()
+
+        user = conn.execute(
+            "SELECT id FROM users WHERE email = ?",
+            (email,)
+        ).fetchone()
+
+        if not user:
+
+            conn.close()
+
+            return "No account found with this email!"
+
+        # --------------------------------------
+        # HASH NEW PASSWORD
+        # --------------------------------------
+
+        hashed_password = generate_password_hash(
+            new_password
+        )
+
+        # --------------------------------------
+        # UPDATE PASSWORD
+        # --------------------------------------
+
+        conn.execute(
+            """
+            UPDATE users
+            SET password = ?
+            WHERE id = ?
+            """,
+            (
+                hashed_password,
+                user["id"]
+            )
+        )
+
+        conn.commit()
+
+        conn.close()
+
+        # --------------------------------------
+        # GO BACK TO LOGIN
+        # --------------------------------------
+
+        return redirect(url_for("login"))
+
+    return render_template("forgot_password.html")
+
+
+# ==========================================
 # DASHBOARD
 # ==========================================
 
