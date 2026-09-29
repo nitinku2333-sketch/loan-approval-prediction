@@ -1,9 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
 
-    <title>Dashboard</title>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard - Loan Approval System</title>
 
     <link
         rel="stylesheet"
@@ -12,52 +16,403 @@
 
 </head>
 
+
 <body>
+
+
+    <!-- ==========================================
+         DASHBOARD
+    =========================================== -->
 
     <div class="dashboard">
 
-        <nav>
 
-            <h2>Loan Approval System</h2>
+        <!-- ======================================
+             NAVBAR
+        ======================================= -->
 
-            <a href="{{ url_for('logout') }}">
-                Logout
-            </a>
+        <nav class="navbar">
+
+            <div class="logo">
+
+                <h2>
+                    Loan Approval System
+                </h2>
+
+            </div>
+
+
+            <div class="nav-links">
+
+                <a href="{{ url_for('dashboard') }}">
+                    Dashboard
+                </a>
+
+                <a href="{{ url_for('predict') }}">
+                    Predict Loan
+                </a>
+
+                <a href="{{ url_for('history') }}">
+                    History
+                </a>
+
+                <a
+                    href="{{ url_for('logout') }}"
+                    class="logout-btn"
+                >
+                    Logout
+                </a>
+
+            </div>
 
         </nav>
 
 
-        <div class="welcome">
 
-            <h1>Welcome, {{ name }}</h1>
+        <!-- ======================================
+             MAIN CONTENT
+        ======================================= -->
+
+        <main class="main-content">
+
+
+            <!-- ==================================
+                 WELCOME SECTION
+            =================================== -->
+
+            <section class="welcome">
+
+                <div>
+
+                    <p class="welcome-small">
+                        Welcome back
+                    </p>
+
+                    <h1>
+                        Hello, {{ name }} 👋
+                    </h1>
+
+                    <p class="welcome-text">
+                        Manage your loan predictions from your dashboard.
+                    </p>
+
+                </div>
+
+
+                <a
+                    href="{{ url_for('predict') }}"
+                    class="primary-btn"
+                >
+                    + Predict New Loan
+                </a>
+
+            </section>
+
+
+
+            <!-- ==================================
+                 STATISTICS
+            =================================== -->
+
+            <section class="stats">
+
+
+                <!-- TOTAL -->
+
+                <div class="stat-card">
+
+                    <div class="stat-icon total-icon">
+                        📊
+                    </div>
+
+                    <div>
+
+                        <p>
+                            Total Predictions
+                        </p>
+
+                        <h2>
+                            {{ total_predictions }}
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- APPROVED -->
+
+                <div class="stat-card">
+
+                    <div class="stat-icon approved-icon">
+                        ✓
+                    </div>
+
+                    <div>
+
+                        <p>
+                            Approved Loans
+                        </p>
+
+                        <h2>
+                            {{ approved_predictions }}
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- REJECTED -->
+
+                <div class="stat-card">
+
+                    <div class="stat-icon rejected-icon">
+                        ✕
+                    </div>
+
+                    <div>
+
+                        <p>
+                            Rejected Loans
+                        </p>
+
+                        <h2>
+                            {{ rejected_predictions }}
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- ==================================
+                 PREDICTION SECTION
+            =================================== -->
+
+            <section class="prediction-card">
+
+
+                <div class="prediction-content">
+
+                    <p class="section-label">
+                        LOAN PREDICTION
+                    </p>
+
+                    <h2>
+                        Check Your Loan Eligibility
+                    </h2>
+
+                    <p>
+                        Enter your personal, financial and credit
+                        information to get a machine learning based
+                        loan prediction.
+                    </p>
+
+                    <a
+                        href="{{ url_for('predict') }}"
+                        class="primary-btn"
+                    >
+                        Start Prediction
+                    </a>
+
+                </div>
+
+
+                <div class="prediction-icon">
+                    🏦
+                </div>
+
+
+            </section>
+
+
+
+            <!-- ==================================
+                 RECENT PREDICTIONS
+            =================================== -->
+
+            <section class="recent-section">
+
+
+                <div class="section-header">
+
+                    <div>
+
+                        <p class="section-label">
+                            ACTIVITY
+                        </p>
+
+                        <h2>
+                            Recent Predictions
+                        </h2>
+
+                    </div>
+
+
+                    <a
+                        href="{{ url_for('history') }}"
+                        class="view-history"
+                    >
+                        View All →
+                    </a>
+
+                </div>
+
+
+
+                {% if recent_predictions %}
+
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Date
+                                </th>
+
+                                <th>
+                                    Loan Amount
+                                </th>
+
+                                <th>
+                                    Income
+                                </th>
+
+                                <th>
+                                    Property Area
+                                </th>
+
+                                <th>
+                                    Result
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            {% for prediction in recent_predictions %}
+
+                            <tr>
+
+                                <td>
+                                    {{ prediction["created_at"] }}
+                                </td>
+
+                                <td>
+                                    ₹{{ prediction["loan_amount"] }}
+                                </td>
+
+                                <td>
+                                    ₹{{ prediction["applicant_income"] }}
+                                </td>
+
+                                <td>
+                                    {{ prediction["property_area"] }}
+                                </td>
+
+                                <td>
+
+                                    {% if prediction["result"] == "Approved" %}
+
+                                        <span class="status approved">
+                                            ✓ Approved
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="status rejected">
+                                            ✕ Rejected
+                                        </span>
+
+                                    {% endif %}
+
+                                </td>
+
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                {% else %}
+
+
+                <!-- NO PREDICTION -->
+
+                <div class="empty-state">
+
+                    <div class="empty-icon">
+                        📋
+                    </div>
+
+                    <h3>
+                        No predictions yet
+                    </h3>
+
+                    <p>
+                        Start your first loan prediction to see
+                        your activity here.
+                    </p>
+
+                    <a
+                        href="{{ url_for('predict') }}"
+                        class="primary-btn"
+                    >
+                        Predict Your Loan
+                    </a>
+
+                </div>
+
+
+                {% endif %}
+
+
+            </section>
+
+
+        </main>
+
+
+
+        <!-- ======================================
+             FOOTER
+        ======================================= -->
+
+        <footer>
 
             <p>
-                Loan Approval Prediction Dashboard
+                © 2026 Loan Approval Prediction System
             </p>
-
-        </div>
-
-
-        <div class="card">
-
-            <h2>Loan Approval Prediction</h2>
 
             <p>
-                Enter your loan and applicant details
-                to check the loan approval prediction.
+                Machine Learning Based Web Application
             </p>
 
-            <a href="{{ url_for('predict') }}">
+        </footer>
 
-                <button>
-                    Predict Loan
-                </button>
-
-            </a>
-
-        </div>
 
     </div>
+
 
 </body>
 
