@@ -1,218 +1,557 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
 
-    <title>Loan Prediction</title>
+    <meta charset="UTF-8">
 
-    <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='css/predict.css') }}"
-    >
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Predict Loan - Loan Approval System</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/predict.css') }}">
 
 </head>
 
 <body>
 
-<div class="form-container">
+    <!-- Navbar -->
 
-    <h1>Loan Approval Prediction</h1>
+    <nav class="navbar">
 
-    <p>Enter Applicant Details</p>
+        <div class="logo">
+            Loan Approval System
+        </div>
 
+        <div class="nav-links">
 
-    <form method="POST">
+            <a href="{{ url_for('dashboard') }}">
+                Dashboard
+            </a>
 
+            <a href="{{ url_for('predict') }}" class="active">
+                Predict Loan
+            </a>
 
-        <!-- Gender -->
+            <a href="{{ url_for('history') }}">
+                History
+            </a>
 
-        <label>Gender</label>
+            <a href="{{ url_for('profile') }}">
+                Profile
+            </a>
 
-        <select name="gender" required>
+            <a href="{{ url_for('logout') }}">
+                Logout
+            </a>
 
-            <option value="">Select Gender</option>
+        </div>
 
-            <option value="Male">Male</option>
+    </nav>
 
-            <option value="Female">Female</option>
 
-        </select>
+    <!-- Main -->
 
+    <main class="page-container">
 
-        <!-- Married -->
+        <div class="prediction-header">
 
-        <label>Married</label>
+            <span class="small-title">
+                LOAN ASSESSMENT
+            </span>
 
-        <select name="married" required>
+            <h1>
+                Loan Approval Prediction
+            </h1>
 
-            <option value="">Select</option>
+            <p>
+                Enter the applicant's details below to check
+                the estimated loan approval result.
+            </p>
 
-            <option value="Yes">Yes</option>
+        </div>
 
-            <option value="No">No</option>
 
-        </select>
+        <!-- Prediction Form -->
 
+        <form method="POST" class="prediction-form">
 
-        <!-- Dependents -->
 
-        <label>Dependents</label>
+            <!-- Personal Information -->
 
-        <select name="dependents" required>
+            <section class="form-section">
 
-            <option value="">Select</option>
+                <div class="section-heading">
 
-            <option value="0">0</option>
+                    <div class="section-number">
+                        01
+                    </div>
 
-            <option value="1">1</option>
+                    <div>
+                        <h2>Personal Information</h2>
 
-            <option value="2">2</option>
+                        <p>
+                            Basic information about the applicant
+                        </p>
+                    </div>
 
-            <option value="3+">3+</option>
+                </div>
 
-        </select>
 
+                <div class="form-grid">
 
-        <!-- Education -->
 
-        <label>Education</label>
+                    <!-- Gender -->
 
-        <select name="education" required>
+                    <div class="form-group">
 
-            <option value="">Select Education</option>
+                        <label for="gender">
+                            Gender
+                        </label>
 
-            <option value="Graduate">
-                Graduate
-            </option>
+                        <select
+                            id="gender"
+                            name="gender"
+                            required
+                        >
 
-            <option value="Not Graduate">
-                Not Graduate
-            </option>
+                            <option value="">
+                                Select Gender
+                            </option>
 
-        </select>
+                            <option value="Male">
+                                Male
+                            </option>
 
+                            <option value="Female">
+                                Female
+                            </option>
 
-        <!-- Self Employed -->
+                        </select>
 
-        <label>Self Employed</label>
+                    </div>
 
-        <select name="self_employed" required>
 
-            <option value="">Select</option>
+                    <!-- Married -->
 
-            <option value="Yes">Yes</option>
+                    <div class="form-group">
 
-            <option value="No">No</option>
+                        <label for="married">
+                            Married
+                        </label>
 
-        </select>
+                        <select
+                            id="married"
+                            name="married"
+                            required
+                        >
 
+                            <option value="">
+                                Select
+                            </option>
 
-        <!-- Applicant Income -->
+                            <option value="Yes">
+                                Yes
+                            </option>
 
-        <label>Applicant Income</label>
+                            <option value="No">
+                                No
+                            </option>
 
-        <input
-            type="number"
-            name="applicant_income"
-            placeholder="Enter applicant income"
-            required
-        >
+                        </select>
 
+                    </div>
 
-        <!-- Coapplicant Income -->
 
-        <label>Coapplicant Income</label>
+                    <!-- Dependents -->
 
-        <input
-            type="number"
-            name="coapplicant_income"
-            placeholder="Enter coapplicant income"
-            required
-        >
+                    <div class="form-group">
 
+                        <label for="dependents">
+                            Dependents
+                        </label>
 
-        <!-- Loan Amount -->
+                        <select
+                            id="dependents"
+                            name="dependents"
+                            required
+                        >
 
-        <label>Loan Amount</label>
+                            <option value="">
+                                Select
+                            </option>
 
-        <input
-            type="number"
-            name="loan_amount"
-            placeholder="Enter loan amount"
-            required
-        >
+                            <option value="0">
+                                0
+                            </option>
 
+                            <option value="1">
+                                1
+                            </option>
 
-        <!-- Loan Term -->
+                            <option value="2">
+                                2
+                            </option>
 
-        <label>Loan Term</label>
+                            <option value="3+">
+                                3+
+                            </option>
 
-        <select name="loan_term" required>
+                        </select>
 
-            <option value="">Select Loan Term</option>
+                    </div>
 
-            <option value="120">120 Months</option>
 
-            <option value="180">180 Months</option>
+                    <!-- Education -->
 
-            <option value="240">240 Months</option>
+                    <div class="form-group">
 
-            <option value="300">300 Months</option>
+                        <label for="education">
+                            Education
+                        </label>
 
-            <option value="360">360 Months</option>
+                        <select
+                            id="education"
+                            name="education"
+                            required
+                        >
 
-        </select>
+                            <option value="">
+                                Select Education
+                            </option>
 
+                            <option value="Graduate">
+                                Graduate
+                            </option>
 
-        <!-- Credit History -->
+                            <option value="Not Graduate">
+                                Not Graduate
+                            </option>
 
-        <label>Credit History</label>
+                        </select>
 
-        <select name="credit_history" required>
+                    </div>
 
-            <option value="">Select</option>
 
-            <option value="1">
-                Good Credit History
-            </option>
+                    <!-- Self Employed -->
 
-            <option value="0">
-                Poor Credit History
-            </option>
+                    <div class="form-group">
 
-        </select>
+                        <label for="self_employed">
+                            Self Employed
+                        </label>
 
+                        <select
+                            id="self_employed"
+                            name="self_employed"
+                            required
+                        >
 
-        <!-- Property Area -->
+                            <option value="">
+                                Select
+                            </option>
 
-        <label>Property Area</label>
+                            <option value="Yes">
+                                Yes
+                            </option>
 
-        <select name="property_area" required>
+                            <option value="No">
+                                No
+                            </option>
 
-            <option value="">Select Property Area</option>
+                        </select>
 
-            <option value="Urban">Urban</option>
+                    </div>
 
-            <option value="Semiurban">Semiurban</option>
+                </div>
 
-            <option value="Rural">Rural</option>
+            </section>
 
-        </select>
 
+            <!-- Financial Information -->
 
-        <button type="submit">
-            Predict Loan
-        </button>
+            <section class="form-section">
 
+                <div class="section-heading">
 
-    </form>
+                    <div class="section-number">
+                        02
+                    </div>
 
+                    <div>
 
-    <a href="{{ url_for('dashboard') }}">
-        Back to Dashboard
-    </a>
+                        <h2>Financial Information</h2>
 
-</div>
+                        <p>
+                            Income and requested loan details
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-grid">
+
+
+                    <!-- Applicant Income -->
+
+                    <div class="form-group">
+
+                        <label for="applicant_income">
+                            Applicant Income
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <span>₹</span>
+
+                            <input
+                                type="number"
+                                id="applicant_income"
+                                name="applicant_income"
+                                placeholder="Enter applicant income"
+                                min="0"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Coapplicant Income -->
+
+                    <div class="form-group">
+
+                        <label for="coapplicant_income">
+                            Coapplicant Income
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <span>₹</span>
+
+                            <input
+                                type="number"
+                                id="coapplicant_income"
+                                name="coapplicant_income"
+                                placeholder="Enter coapplicant income"
+                                min="0"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Loan Amount -->
+
+                    <div class="form-group">
+
+                        <label for="loan_amount">
+                            Loan Amount
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <span>₹</span>
+
+                            <input
+                                type="number"
+                                id="loan_amount"
+                                name="loan_amount"
+                                placeholder="Enter loan amount"
+                                min="0"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Loan Term -->
+
+                    <div class="form-group">
+
+                        <label for="loan_term">
+                            Loan Term
+                        </label>
+
+                        <select
+                            id="loan_term"
+                            name="loan_term"
+                            required
+                        >
+
+                            <option value="">
+                                Select Loan Term
+                            </option>
+
+                            <option value="120">
+                                120 Months
+                            </option>
+
+                            <option value="180">
+                                180 Months
+                            </option>
+
+                            <option value="240">
+                                240 Months
+                            </option>
+
+                            <option value="300">
+                                300 Months
+                            </option>
+
+                            <option value="360">
+                                360 Months
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- Credit & Property -->
+
+            <section class="form-section">
+
+                <div class="section-heading">
+
+                    <div class="section-number">
+                        03
+                    </div>
+
+                    <div>
+
+                        <h2>Credit & Property</h2>
+
+                        <p>
+                            Credit history and property information
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-grid">
+
+
+                    <!-- Credit History -->
+
+                    <div class="form-group">
+
+                        <label for="credit_history">
+                            Credit History
+                        </label>
+
+                        <select
+                            id="credit_history"
+                            name="credit_history"
+                            required
+                        >
+
+                            <option value="">
+                                Select
+                            </option>
+
+                            <option value="1">
+                                Good Credit History
+                            </option>
+
+                            <option value="0">
+                                Poor Credit History
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Property Area -->
+
+                    <div class="form-group">
+
+                        <label for="property_area">
+                            Property Area
+                        </label>
+
+                        <select
+                            id="property_area"
+                            name="property_area"
+                            required
+                        >
+
+                            <option value="">
+                                Select Property Area
+                            </option>
+
+                            <option value="Urban">
+                                Urban
+                            </option>
+
+                            <option value="Semiurban">
+                                Semiurban
+                            </option>
+
+                            <option value="Rural">
+                                Rural
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- Action -->
+
+            <div class="form-actions">
+
+                <a href="{{ url_for('dashboard') }}"
+                   class="back-button">
+
+                    ← Back to Dashboard
+
+                </a>
+
+
+                <button type="submit"
+                        class="predict-button">
+
+                    Predict Loan
+                    <span>→</span>
+
+                </button>
+
+            </div>
+
+
+        </form>
+
+    </main>
+
+
+    <footer>
+
+        <p>
+            Loan Approval Prediction System
+        </p>
+
+    </footer>
 
 </body>
 
