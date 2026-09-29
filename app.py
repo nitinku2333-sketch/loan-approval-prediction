@@ -2,9 +2,13 @@ from flask import Flask, render_template, request, redirect, url_for, session
 import sqlite3
 import pickle
 import pandas as pd
-
+from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 
+
+# ==========================================
+# FLASK APPLICATION
+# ==========================================
 
 app = Flask(__name__)
 
@@ -42,9 +46,17 @@ def get_db():
     return conn
 
 
+# ==========================================
+# INITIALIZE DATABASE
+# ==========================================
+
 def init_db():
 
     conn = get_db()
+
+    # --------------------------------------
+    # USERS TABLE
+    # --------------------------------------
 
     conn.execute("""
         CREATE TABLE IF NOT EXISTS users (
@@ -55,15 +67,41 @@ def init_db():
         )
     """)
 
+    # --------------------------------------
+    # PREDICTIONS TABLE
+    # --------------------------------------
+
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS predictions (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+
+            gender TEXT NOT NULL,
+            married TEXT NOT NULL,
+            dependents TEXT NOT NULL,
+            education TEXT NOT NULL,
+            self_employed TEXT NOT NULL,
+
+            applicant_income REAL NOT NULL,
+            coapplicant_income REAL NOT NULL,
+            loan_amount REAL NOT NULL,
+            loan_term INTEGER NOT NULL,
+            credit_history INTEGER NOT NULL,
+            property_area TEXT NOT NULL,
+
+            result TEXT NOT NULL,
+            created_at TEXT NOT NULL,
+
+            FOREIGN KEY (user_id) REFERENCES users(id)
+        )
+    """)
+
     conn.commit()
 
     conn.close()
 
 
-# ==========================================
-# INITIALIZE DATABASE
-# ==========================================
-
+# Initialize database when application starts
 init_db()
 
 
@@ -87,7 +125,9 @@ def register():
     if request.method == "POST":
 
         name = request.form["name"]
+
         email = request.form["email"]
+
         password = request.form["password"]
 
         hashed_password = generate_password_hash(password)
@@ -169,9 +209,75 @@ def dashboard():
 
         return redirect(url_for("login"))
 
+    user_id = session["user_id"]
+
+    conn = get_db()
+
+    # --------------------------------------
+    # TOTAL PREDICTIONS
+    # --------------------------------------
+
+    total_predictions = conn.execute(
+        """
+        SELECT COUNT(*) AS total
+        FROM predictions
+        WHERE user_id = ?
+        """,
+        (user_id,)
+    ).fetchone()["total"]
+
+    # --------------------------------------
+    # APPROVED PREDICTIONS
+    # --------------------------------------
+
+    approved_predictions = conn.execute(
+        """
+        SELECT COUNT(*) AS total
+        FROM predictions
+        WHERE user_id = ?
+        AND result = 'Approved'
+        """,
+        (user_id,)
+    ).fetchone()["total"]
+
+    # --------------------------------------
+    # REJECTED PREDICTIONS
+    # --------------------------------------
+
+    rejected_predictions = conn.execute(
+        """
+        SELECT COUNT(*) AS total
+        FROM predictions
+        WHERE user_id = ?
+        AND result = 'Rejected'
+        """,
+        (user_id,)
+    ).fetchone()["total"]
+
+    # --------------------------------------
+    # RECENT PREDICTIONS
+    # --------------------------------------
+
+    recent_predictions = conn.execute(
+        """
+        SELECT *
+        FROM predictions
+        WHERE user_id = ?
+        ORDER BY id DESC
+        LIMIT 5
+        """,
+        (user_id,)
+    ).fetchall()
+
+    conn.close()
+
     return render_template(
         "dashboard.html",
-        name=session["user_name"]
+        name=session["user_name"],
+        total_predictions=total_predictions,
+        approved_predictions=approved_predictions,
+        rejected_predictions=rejected_predictions,
+        recent_predictions=recent_predictions
     )
 
 
@@ -306,10 +412,12 @@ def predict():
 
         reasons = []
 
-
         if prediction_result == "Rejected":
 
-            # Credit history
+            # --------------------------------------
+            # Credit History
+            # --------------------------------------
+
             if credit_history == 0:
 
                 reasons.append(
@@ -317,7 +425,10 @@ def predict():
                 )
 
 
-            # Income vs loan amount
+            # --------------------------------------
+            # Income vs Loan Amount
+            # --------------------------------------
+
             total_income = (
                 applicant_income +
                 coapplicant_income
@@ -336,7 +447,10 @@ def predict():
                     )
 
 
-            # Applicant income
+            # --------------------------------------
+            # Applicant Income
+            # --------------------------------------
+
             if applicant_income < 30000:
 
                 reasons.append(
@@ -344,7 +458,10 @@ def predict():
                 )
 
 
-            # Co-applicant income
+            # --------------------------------------
+            # Co-applicant Income
+            # --------------------------------------
+
             if (
                 coapplicant_income == 0
                 and applicant_income < 40000
@@ -355,7 +472,10 @@ def predict():
                 )
 
 
+            # --------------------------------------
             # Education
+            # --------------------------------------
+
             if education == "Not Graduate":
 
                 reasons.append(
@@ -363,7 +483,10 @@ def predict():
                 )
 
 
-            # Self employed
+            # --------------------------------------
+            # Self Employed
+            # --------------------------------------
+
             if self_employed == "Yes":
 
                 reasons.append(
@@ -371,7 +494,10 @@ def predict():
                 )
 
 
+            # --------------------------------------
             # Dependents
+            # --------------------------------------
+
             if dependents == "3+":
 
                 reasons.append(
@@ -379,12 +505,77 @@ def predict():
                 )
 
 
-            # If no specific factor was found
+            # --------------------------------------
+            # Default Reason
+            # --------------------------------------
+
             if len(reasons) == 0:
 
                 reasons.append(
                     "The applicant profile does not sufficiently match patterns learned by the machine learning model."
                 )
+
+
+        # ==========================================
+        # SAVE PREDICTION TO DATABASE
+        # ==========================================
+
+        conn = get_db()
+
+        conn.execute(
+            """
+            INSERT INTO predictions (
+
+                user_id,
+
+                gender,
+                married,
+                dependents,
+                education,
+                self_employed,
+
+                applicant_income,
+                coapplicant_income,
+                loan_amount,
+                loan_term,
+                credit_history,
+                property_area,
+
+                result,
+                created_at
+
+            )
+
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """,
+
+            (
+                session["user_id"],
+
+                gender,
+                married,
+                dependents,
+                education,
+                self_employed,
+
+                applicant_income,
+                coapplicant_income,
+                loan_amount,
+                loan_term,
+                credit_history,
+                property_area,
+
+                prediction_result,
+
+                datetime.now().strftime(
+                    "%Y-%m-%d %H:%M:%S"
+                )
+            )
+        )
+
+        conn.commit()
+
+        conn.close()
 
 
         # ==========================================
@@ -399,6 +590,71 @@ def predict():
 
 
     return render_template("predict.html")
+
+
+# ==========================================
+# PREDICTION HISTORY
+# ==========================================
+
+@app.route("/history")
+def history():
+
+    if "user_id" not in session:
+
+        return redirect(url_for("login"))
+
+    user_id = session["user_id"]
+
+    conn = get_db()
+
+    predictions = conn.execute(
+        """
+        SELECT *
+        FROM predictions
+        WHERE user_id = ?
+        ORDER BY id DESC
+        """,
+        (user_id,)
+    ).fetchall()
+
+    conn.close()
+
+    return render_template(
+        "history.html",
+        predictions=predictions
+    )
+
+
+# ==========================================
+# DELETE SINGLE PREDICTION
+# ==========================================
+
+@app.route("/history/delete/<int:prediction_id>")
+def delete_prediction(prediction_id):
+
+    if "user_id" not in session:
+
+        return redirect(url_for("login"))
+
+    conn = get_db()
+
+    conn.execute(
+        """
+        DELETE FROM predictions
+        WHERE id = ?
+        AND user_id = ?
+        """,
+        (
+            prediction_id,
+            session["user_id"]
+        )
+    )
+
+    conn.commit()
+
+    conn.close()
+
+    return redirect(url_for("history"))
 
 
 # ==========================================
