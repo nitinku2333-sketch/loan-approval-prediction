@@ -117,3 +117,18 @@ body {
 
     cursor: pointer;
 }
+.forgot-password {
+    margin-top: 12px;
+    margin-bottom: 10px;
+}
+
+.forgot-password a {
+    color: #ed7942;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.forgot-password a:hover {
+    text-decoration: underline;
+}
