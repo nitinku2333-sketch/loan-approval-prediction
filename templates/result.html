@@ -5,208 +5,230 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-    <title>Loan Prediction Result</title>
+    <title>Prediction Result - Loan Approval System</title>
 
-    <style>
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-
-            font-family: Arial, sans-serif;
-
-            min-height: 100vh;
-
-            display: flex;
-
-            justify-content: center;
-
-            align-items: center;
-
-            background: #f4f6f8;
-
-        }
-
-        .result-container {
-
-            width: 90%;
-
-            max-width: 600px;
-
-            background: white;
-
-            padding: 40px;
-
-            border-radius: 15px;
-
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
-
-            text-align: center;
-
-        }
-
-        h1 {
-
-            margin-bottom: 20px;
-
-        }
-
-        .approved {
-
-            color: green;
-
-        }
-
-        .rejected {
-
-            color: red;
-
-        }
-
-        .reasons {
-
-            margin-top: 25px;
-
-            text-align: left;
-
-            background: #fff5f5;
-
-            padding: 20px;
-
-            border-radius: 10px;
-
-        }
-
-        .reasons h2 {
-
-            margin-bottom: 15px;
-
-            color: #333;
-
-        }
-
-        .reasons ul {
-
-            padding-left: 20px;
-
-        }
-
-        .reasons li {
-
-            margin-bottom: 10px;
-
-        }
-
-        .back-button {
-
-            display: inline-block;
-
-            margin-top: 25px;
-
-            padding: 12px 25px;
-
-            background: #ED7942;
-
-            color: white;
-
-            text-decoration: none;
-
-            border-radius: 8px;
-
-        }
-
-        .note {
-
-            margin-top: 20px;
-
-            font-size: 13px;
-
-            color: #666;
-
-        }
-
-    </style>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/result.css') }}">
 
 </head>
 
-
 <body>
 
-    <div class="result-container">
 
-        {% if result == "Approved" %}
+    <!-- Navbar -->
 
-            <h1 class="approved">
-                ✅ Loan Approved
-            </h1>
+    <nav class="navbar">
 
-            <p>
-                Based on the submitted information,
-                the model predicts that the loan may be approved.
-            </p>
+        <div class="logo">
+            Loan Approval System
+        </div>
 
-        {% else %}
+        <div class="nav-links">
 
-            <h1 class="rejected">
-                ❌ Loan Rejected
-            </h1>
+            <a href="{{ url_for('dashboard') }}">
+                Dashboard
+            </a>
 
-            <p>
-                Based on the submitted information,
-                the model predicts that the loan may be rejected.
-            </p>
+            <a href="{{ url_for('predict') }}">
+                Predict Loan
+            </a>
+
+            <a href="{{ url_for('history') }}">
+                History
+            </a>
+
+            <a href="{{ url_for('profile') }}">
+                Profile
+            </a>
+
+            <a href="{{ url_for('logout') }}">
+                Logout
+            </a>
+
+        </div>
+
+    </nav>
 
 
-            {% if reasons %}
+    <!-- Main -->
 
-                <div class="reasons">
+    <main class="result-page">
 
-                    <h2>
-                        Possible Factors
-                    </h2>
+        <div class="result-card">
 
-                    <ul>
+
+            <!-- Result Header -->
+
+            {% if result == "Approved" %}
+
+                <div class="status-icon approved-icon">
+                    ✓
+                </div>
+
+                <span class="status-label approved-label">
+                    PREDICTION COMPLETE
+                </span>
+
+                <h1>
+                    Loan Approved
+                </h1>
+
+                <p class="result-message">
+                    Based on the submitted information,
+                    the model predicts that the loan may be approved.
+                </p>
+
+            {% else %}
+
+                <div class="status-icon rejected-icon">
+                    !
+                </div>
+
+                <span class="status-label rejected-label">
+                    PREDICTION COMPLETE
+                </span>
+
+                <h1>
+                    Loan Rejected
+                </h1>
+
+                <p class="result-message">
+                    Based on the submitted information,
+                    the model predicts that the loan may be rejected.
+                </p>
+
+            {% endif %}
+
+
+            <!-- Result Badge -->
+
+            <div class="result-badge
+                {% if result == 'Approved' %}
+                    badge-approved
+                {% else %}
+                    badge-rejected
+                {% endif %}
+            ">
+
+                {% if result == "Approved" %}
+                    ✓ Approved
+                {% else %}
+                    ✕ Rejected
+                {% endif %}
+
+            </div>
+
+
+            <!-- Rejection Reasons -->
+
+            {% if result != "Approved" and reasons %}
+
+                <div class="reasons-section">
+
+                    <div class="section-title">
+
+                        <span class="section-number">
+                            01
+                        </span>
+
+                        <div>
+
+                            <h2>
+                                Possible Factors
+                            </h2>
+
+                            <p>
+                                Factors that may have influenced the prediction
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="reason-list">
 
                         {% for reason in reasons %}
 
-                            <li>
-                                {{ reason }}
-                            </li>
+                            <div class="reason-item">
+
+                                <span class="reason-icon">
+                                    !
+                                </span>
+
+                                <span>
+                                    {{ reason }}
+                                </span>
+
+                            </div>
 
                         {% endfor %}
 
-                    </ul>
+                    </div>
 
                 </div>
 
             {% endif %}
 
 
-            <p class="note">
+            <!-- Information Note -->
 
-                Note: These are possible factors based on
-                the submitted information and model behavior.
-                They are not an official reason from a bank.
+            <div class="info-note">
 
-            </p>
+                <span class="info-icon">
+                    i
+                </span>
 
-        {% endif %}
+                <p>
+                    This prediction is generated by the machine
+                    learning model based on the information submitted.
+                    It is not an official loan decision from a bank.
+                </p>
+
+            </div>
 
 
-        <a
-            href="{{ url_for('predict') }}"
-            class="back-button"
-        >
-            Predict Again
-        </a>
+            <!-- Actions -->
 
-    </div>
+            <div class="result-actions">
+
+                <a href="{{ url_for('dashboard') }}"
+                   class="secondary-button">
+
+                    Dashboard
+
+                </a>
+
+
+                <a href="{{ url_for('predict') }}"
+                   class="primary-button">
+
+                    Predict Again
+                    <span>→</span>
+
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </main>
+
+
+    <!-- Footer -->
+
+    <footer>
+
+        <p>
+            Loan Approval Prediction System
+        </p>
+
+    </footer>
+
 
 </body>
 
