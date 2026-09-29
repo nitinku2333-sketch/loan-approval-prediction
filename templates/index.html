@@ -1,237 +1,559 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Loan Prediction System</title>
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Loan Approval System</title>
 
     <link rel="stylesheet"
           href="{{ url_for('static', filename='css/home.css') }}">
+
 </head>
 
 <body>
 
-    <!-- ================= NAVBAR ================= -->
 
-    <header class="navbar">
+    <!-- =========================
+         NAVBAR
+    ========================== -->
+
+    <nav class="navbar">
 
         <div class="logo">
-            💰 LoanPredict
+            Loan Approval System
         </div>
 
-        <nav>
-            <a href="/">Home</a>
-            <a href="#features">Features</a>
-            <a href="#about">About</a>
-            <a href="{{ url_for('login') }}">Login</a>
-            <a href="{{ url_for('register') }}" class="register-btn">
-                Register
+
+        <div class="nav-links">
+
+            <a href="{{ url_for('home') }}"
+               class="active">
+                Home
             </a>
-        </nav>
 
-    </header>
-
-
-    <!-- ================= HERO SECTION ================= -->
-
-    <section class="hero">
-
-        <div class="hero-content">
-
-            <p class="small-title">
-                SMART LOAN DECISION SYSTEM
-            </p>
-
-            <h1>
-                Check Your Loan
-                <span>Eligibility</span>
-                Easily
-            </h1>
-
-            <p class="hero-text">
-                Use our machine learning based loan prediction
-                system to get a quick prediction based on your
-                financial and personal information.
-            </p>
-
-            <div class="hero-buttons">
-
-                <a href="{{ url_for('register') }}"
-                   class="primary-btn">
-                    Get Started
-                </a>
-
-                <a href="#features"
-                   class="secondary-btn">
-                    Explore Features
-                </a>
-
-            </div>
-
-        </div>
-
-
-        <div class="hero-card">
-
-            <div class="card-icon">
-                🏦
-            </div>
-
-            <h2>Loan Prediction</h2>
-
-            <p>
-                Enter your details and get an instant
-                loan approval prediction.
-            </p>
-
-            <div class="prediction-box">
-
-                <div>
-                    <small>Prediction</small>
-                    <strong>Approval Check</strong>
-                </div>
-
-                <span>✓</span>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- ================= FEATURES ================= -->
-
-    <section class="features" id="features">
-
-        <div class="section-heading">
-
-            <p>WHY USE OUR SYSTEM?</p>
-
-            <h2>Simple & Smart Loan Prediction</h2>
-
-            <span>
-                Everything you need to check your loan eligibility
-                in one place.
-            </span>
-
-        </div>
-
-
-        <div class="feature-container">
-
-            <div class="feature-card">
-
-                <div class="feature-icon">
-                    🤖
-                </div>
-
-                <h3>Machine Learning</h3>
-
-                <p>
-                    Our system uses a trained machine learning
-                    model to generate loan predictions.
-                </p>
-
-            </div>
-
-
-            <div class="feature-card">
-
-                <div class="feature-icon">
-                    ⚡
-                </div>
-
-                <h3>Quick Prediction</h3>
-
-                <p>
-                    Enter your information and receive your
-                    prediction within seconds.
-                </p>
-
-            </div>
-
-
-            <div class="feature-card">
-
-                <div class="feature-icon">
-                    🔐
-                </div>
-
-                <h3>Secure Login</h3>
-
-                <p>
-                    Users can create an account and securely
-                    access their dashboard.
-                </p>
-
-            </div>
-
-
-            <div class="feature-card">
-
-                <div class="feature-icon">
-                    📊
-                </div>
-
-                <h3>Easy to Understand</h3>
-
-                <p>
-                    The prediction result is displayed in a
-                    simple and understandable format.
-                </p>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- ================= ABOUT ================= -->
-
-    <section class="about" id="about">
-
-        <div class="about-content">
-
-            <p>ABOUT THE PROJECT</p>
-
-            <h2>
-                A Simple Way to Explore
-                Loan Eligibility
-            </h2>
-
-            <p>
-                LoanPredict is a machine learning based web
-                application designed to demonstrate how
-                financial information can be used to generate
-                a loan approval prediction.
-            </p>
+            <a href="#features">
+                Features
+            </a>
+
+            <a href="#about">
+                About
+            </a>
+
+            <a href="{{ url_for('login') }}"
+               class="login-link">
+                Login
+            </a>
 
             <a href="{{ url_for('register') }}"
-               class="primary-btn">
-                Try Prediction
+               class="register-button">
+                Get Started
             </a>
 
         </div>
 
-    </section>
+    </nav>
 
 
-    <!-- ================= FOOTER ================= -->
+
+    <!-- =========================
+         HERO SECTION
+    ========================== -->
+
+    <main>
+
+        <section class="hero">
+
+            <div class="hero-content">
+
+                <span class="hero-label">
+                    SMART LOAN ASSESSMENT
+                </span>
+
+
+                <h1>
+                    Make Smarter
+                    <span>Loan Decisions.</span>
+                </h1>
+
+
+                <p>
+                    A web-based loan approval prediction system
+                    that uses machine learning to analyze applicant
+                    information and generate an estimated loan
+                    approval result.
+                </p>
+
+
+                <div class="hero-buttons">
+
+                    <a href="{{ url_for('register') }}"
+                       class="primary-button">
+
+                        Get Started
+                        <span>→</span>
+
+                    </a>
+
+
+                    <a href="#features"
+                       class="secondary-button">
+
+                        Explore Features
+
+                    </a>
+
+                </div>
+
+
+                <div class="hero-note">
+
+                    <span class="check-icon">
+                        ✓
+                    </span>
+
+                    Simple &nbsp; • &nbsp;
+                    Fast &nbsp; • &nbsp;
+                    Machine Learning Based
+
+                </div>
+
+            </div>
+
+
+            <!-- Hero Visual -->
+
+            <div class="hero-visual">
+
+                <div class="visual-card">
+
+                    <div class="visual-top">
+
+                        <div>
+
+                            <span class="visual-small">
+                                LOAN ASSESSMENT
+                            </span>
+
+                            <h3>
+                                Prediction Overview
+                            </h3>
+
+                        </div>
+
+
+                        <div class="visual-dot">
+                        </div>
+
+                    </div>
+
+
+                    <div class="score-area">
+
+                        <div class="score-circle">
+
+                            <span>
+                                ML
+                            </span>
+
+                        </div>
+
+
+                        <div class="score-content">
+
+                            <span>
+                                AI-Powered Analysis
+                            </span>
+
+                            <strong>
+                                Loan Prediction
+                            </strong>
+
+                            <small>
+                                Based on applicant details
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="visual-details">
+
+                        <div class="detail-item">
+
+                            <span>
+                                Income
+                            </span>
+
+                            <strong>
+                                Applicant
+                            </strong>
+
+                        </div>
+
+
+                        <div class="detail-item">
+
+                            <span>
+                                Credit
+                            </span>
+
+                            <strong>
+                                History
+                            </strong>
+
+                        </div>
+
+
+                        <div class="detail-item">
+
+                            <span>
+                                Property
+                            </span>
+
+                            <strong>
+                                Area
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="visual-status">
+
+                        <span class="status-indicator">
+                        </span>
+
+                        Prediction Ready
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             FEATURES
+        ========================== -->
+
+        <section class="features-section"
+                 id="features">
+
+            <div class="section-heading">
+
+                <span class="section-label">
+                    FEATURES
+                </span>
+
+                <h2>
+                    Everything you need for
+                    loan prediction
+                </h2>
+
+                <p>
+                    The system provides a simple workflow
+                    for users to submit information and
+                    view their prediction results.
+                </p>
+
+            </div>
+
+
+            <div class="features-grid">
+
+
+                <!-- Feature 1 -->
+
+                <div class="feature-card">
+
+                    <div class="feature-number">
+                        01
+                    </div>
+
+                    <h3>
+                        Easy Registration
+                    </h3>
+
+                    <p>
+                        Create your account quickly and
+                        access the loan prediction system
+                        through a secure login.
+                    </p>
+
+                </div>
+
+
+                <!-- Feature 2 -->
+
+                <div class="feature-card">
+
+                    <div class="feature-number">
+                        02
+                    </div>
+
+                    <h3>
+                        Loan Prediction
+                    </h3>
+
+                    <p>
+                        Enter applicant, financial,
+                        credit and property information
+                        to generate a prediction.
+                    </p>
+
+                </div>
+
+
+                <!-- Feature 3 -->
+
+                <div class="feature-card">
+
+                    <div class="feature-number">
+                        03
+                    </div>
+
+                    <h3>
+                        Prediction History
+                    </h3>
+
+                    <p>
+                        View previous loan predictions
+                        and keep track of submitted
+                        assessments.
+                    </p>
+
+                </div>
+
+
+                <!-- Feature 4 -->
+
+                <div class="feature-card">
+
+                    <div class="feature-number">
+                        04
+                    </div>
+
+                    <h3>
+                        User Profile
+                    </h3>
+
+                    <p>
+                        Manage your account information
+                        and update your profile details
+                        from one place.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             ABOUT SECTION
+        ========================== -->
+
+        <section class="about-section"
+                 id="about">
+
+            <div class="about-content">
+
+                <span class="section-label">
+                    ABOUT THE SYSTEM
+                </span>
+
+
+                <h2>
+                    A simple approach to
+                    loan assessment
+                </h2>
+
+
+                <p>
+                    This Loan Approval Prediction System
+                    is a web-based application designed to
+                    demonstrate how machine learning can
+                    be integrated with a web application.
+                </p>
+
+
+                <p>
+                    Users can register, log in, enter
+                    applicant details, receive a predicted
+                    loan status, and review their previous
+                    predictions.
+                </p>
+
+
+                <a href="{{ url_for('register') }}"
+                   class="about-button">
+
+                    Start Prediction
+                    <span>→</span>
+
+                </a>
+
+            </div>
+
+
+            <div class="about-box">
+
+                <div class="about-box-item">
+
+                    <span class="about-icon">
+                        ML
+                    </span>
+
+                    <div>
+
+                        <strong>
+                            Machine Learning
+                        </strong>
+
+                        <p>
+                            Model-based prediction
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="about-divider">
+                </div>
+
+
+                <div class="about-box-item">
+
+                    <span class="about-icon">
+                        WEB
+                    </span>
+
+                    <div>
+
+                        <strong>
+                            Web Application
+                        </strong>
+
+                        <p>
+                            Flask-based system
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="about-divider">
+                </div>
+
+
+                <div class="about-box-item">
+
+                    <span class="about-icon">
+                        DB
+                    </span>
+
+                    <div>
+
+                        <strong>
+                            User Data
+                        </strong>
+
+                        <p>
+                            SQLite database
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             CTA
+        ========================== -->
+
+        <section class="cta-section">
+
+            <div>
+
+                <span class="section-label">
+                    GET STARTED
+                </span>
+
+                <h2>
+                    Ready to check a loan prediction?
+                </h2>
+
+                <p>
+                    Create an account and start using
+                    the loan prediction system.
+                </p>
+
+            </div>
+
+
+            <a href="{{ url_for('register') }}"
+               class="cta-button">
+
+                Create Account
+                <span>→</span>
+
+            </a>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
 
     <footer>
 
-        <div class="footer-logo">
-            💰 LoanPredict
-        </div>
+        <div class="footer-content">
 
-        <p>
-            © 2026 Loan Prediction System
-        </p>
+            <div>
+
+                <strong>
+                    Loan Approval System
+                </strong>
+
+                <p>
+                    Machine Learning Based Loan Prediction
+                </p>
+
+            </div>
+
+
+            <p class="copyright">
+                © 2026 Loan Approval System
+            </p>
+
+        </div>
 
     </footer>
 
+
 </body>
+
 </html>
