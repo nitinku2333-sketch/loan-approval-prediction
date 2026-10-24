@@ -1,0 +1,624 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+    min-height: 100vh;
+
+    background: #f7f5f2;
+
+    color: #292929;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+}
+
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar {
+    height: 72px;
+
+    padding: 0 6%;
+
+    background: #ffffff;
+
+    border-bottom: 1px solid #e7e3df;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+}
+
+
+.logo {
+    font-size: 20px;
+
+    font-weight: 700;
+
+    color: #292929;
+}
+
+
+.nav-links {
+    display: flex;
+
+    align-items: center;
+
+    gap: 28px;
+}
+
+
+.nav-links a {
+    color: #666;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    transition: 0.2s;
+}
+
+
+.nav-links a:hover {
+    color: #ed7942;
+}
+
+
+/* =========================
+   MAIN
+========================= */
+
+.result-page {
+    min-height: calc(100vh - 137px);
+
+    width: 90%;
+
+    max-width: 850px;
+
+    margin: 0 auto;
+
+    padding: 55px 0 65px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: flex-start;
+}
+
+
+/* =========================
+   RESULT CARD
+========================= */
+
+.result-card {
+    width: 100%;
+
+    background: #ffffff;
+
+    border: 1px solid #e4e0dc;
+
+    border-radius: 14px;
+
+    padding: 45px;
+
+    text-align: center;
+
+    box-shadow:
+        0 8px 30px rgba(0, 0, 0, 0.04);
+}
+
+
+/* =========================
+   STATUS ICON
+========================= */
+
+.status-icon {
+    width: 70px;
+
+    height: 70px;
+
+    margin: 0 auto 18px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 32px;
+
+    font-weight: 700;
+}
+
+
+.approved-icon {
+    background: #e9f7ef;
+
+    color: #269653;
+}
+
+
+.rejected-icon {
+    background: #fff0ed;
+
+    color: #d94c35;
+}
+
+
+/* =========================
+   STATUS LABEL
+========================= */
+
+.status-label {
+    display: inline-block;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    letter-spacing: 1.5px;
+
+    margin-bottom: 10px;
+}
+
+
+.approved-label {
+    color: #269653;
+}
+
+
+.rejected-label {
+    color: #d94c35;
+}
+
+
+/* =========================
+   HEADING
+========================= */
+
+.result-card h1 {
+    font-size: 34px;
+
+    margin-bottom: 12px;
+
+    color: #292929;
+}
+
+
+.result-message {
+    max-width: 580px;
+
+    margin: 0 auto;
+
+    color: #777;
+
+    font-size: 15px;
+
+    line-height: 1.6;
+}
+
+
+/* =========================
+   RESULT BADGE
+========================= */
+
+.result-badge {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    margin-top: 25px;
+
+    padding: 9px 22px;
+
+    border-radius: 30px;
+
+    font-size: 14px;
+
+    font-weight: 700;
+}
+
+
+.badge-approved {
+    background: #e9f7ef;
+
+    color: #269653;
+}
+
+
+.badge-rejected {
+    background: #fff0ed;
+
+    color: #d94c35;
+}
+
+
+/* =========================
+   REASONS
+========================= */
+
+.reasons-section {
+    margin-top: 35px;
+
+    padding: 28px;
+
+    background: #fffaf7;
+
+    border: 1px solid #f0ddd3;
+
+    border-radius: 11px;
+
+    text-align: left;
+}
+
+
+.section-title {
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    padding-bottom: 20px;
+
+    margin-bottom: 20px;
+
+    border-bottom: 1px solid #eee1db;
+}
+
+
+.section-number {
+    width: 40px;
+
+    height: 40px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 8px;
+
+    background: #fff0e8;
+
+    color: #ed7942;
+
+    font-size: 12px;
+
+    font-weight: 700;
+}
+
+
+.section-title h2 {
+    font-size: 18px;
+
+    margin-bottom: 4px;
+
+    color: #292929;
+}
+
+
+.section-title p {
+    font-size: 13px;
+
+    color: #888;
+}
+
+
+/* =========================
+   REASON ITEMS
+========================= */
+
+.reason-list {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+
+.reason-item {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 12px;
+
+    padding: 13px 15px;
+
+    background: #ffffff;
+
+    border: 1px solid #eee4df;
+
+    border-radius: 7px;
+
+    color: #555;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+}
+
+
+.reason-icon {
+    width: 22px;
+
+    height: 22px;
+
+    flex-shrink: 0;
+
+    margin-top: 1px;
+
+    border-radius: 50%;
+
+    background: #fff0ed;
+
+    color: #d94c35;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 12px;
+
+    font-weight: 700;
+}
+
+
+/* =========================
+   INFORMATION NOTE
+========================= */
+
+.info-note {
+    margin-top: 25px;
+
+    padding: 15px 17px;
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 12px;
+
+    background: #f5f6f7;
+
+    border-radius: 8px;
+
+    text-align: left;
+}
+
+
+.info-icon {
+    width: 22px;
+
+    height: 22px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: #777;
+
+    color: #ffffff;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 12px;
+
+    font-weight: 700;
+}
+
+
+.info-note p {
+    color: #707070;
+
+    font-size: 12px;
+
+    line-height: 1.6;
+}
+
+
+/* =========================
+   BUTTONS
+========================= */
+
+.result-actions {
+    margin-top: 30px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 12px;
+}
+
+
+.primary-button,
+.secondary-button {
+    min-width: 150px;
+
+    height: 46px;
+
+    padding: 0 20px;
+
+    border-radius: 7px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    transition: 0.2s;
+}
+
+
+.primary-button {
+    background: #ed7942;
+
+    color: #ffffff;
+
+    gap: 10px;
+}
+
+
+.primary-button:hover {
+    background: #d9632f;
+
+    transform: translateY(-1px);
+}
+
+
+.primary-button span {
+    font-size: 17px;
+}
+
+
+.secondary-button {
+    background: #ffffff;
+
+    color: #555;
+
+    border: 1px solid #d9d5d1;
+}
+
+
+.secondary-button:hover {
+    border-color: #ed7942;
+
+    color: #ed7942;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    padding: 25px;
+
+    border-top: 1px solid #e7e3df;
+
+    text-align: center;
+
+    color: #888;
+
+    font-size: 13px;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 800px) {
+
+    .navbar {
+        height: auto;
+
+        padding: 18px 5%;
+
+        flex-direction: column;
+
+        gap: 15px;
+    }
+
+
+    .nav-links {
+        gap: 18px;
+
+        flex-wrap: wrap;
+
+        justify-content: center;
+    }
+
+
+    .result-page {
+        width: 92%;
+
+        padding-top: 40px;
+    }
+
+
+    .result-card {
+        padding: 35px 25px;
+    }
+}
+
+
+@media (max-width: 550px) {
+
+    .result-page {
+        width: 94%;
+
+        padding-top: 30px;
+    }
+
+
+    .result-card {
+        padding: 30px 18px;
+    }
+
+
+    .result-card h1 {
+        font-size: 27px;
+    }
+
+
+    .result-message {
+        font-size: 14px;
+    }
+
+
+    .reasons-section {
+        padding: 20px 15px;
+    }
+
+
+    .result-actions {
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+
+    .primary-button,
+    .secondary-button {
+        width: 100%;
+    }
+}
