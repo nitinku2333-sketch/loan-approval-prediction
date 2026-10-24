@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Profile - Loan Approval System</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/profile.css') }}">
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            Loan Approval System
+        </div>
+
+        <div class="nav-links">
+
+            <a href="{{ url_for('dashboard') }}">
+                Dashboard
+            </a>
+
+            <a href="{{ url_for('predict') }}">
+                Predict Loan
+            </a>
+
+            <a href="{{ url_for('history') }}">
+                History
+            </a>
+
+            <a href="{{ url_for('profile') }}" class="active">
+                Profile
+            </a>
+
+            <a href="{{ url_for('logout') }}" class="logout">
+                Logout
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="profile-container">
+
+        <div class="profile-header">
+
+            <div class="profile-avatar">
+                {{ user["name"][0]|upper }}
+            </div>
+
+            <div>
+
+                <h1>My Profile</h1>
+
+                <p>
+                    Manage your account information
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= ACCOUNT INFORMATION ================= -->
+
+        <section class="profile-card">
+
+            <div class="card-heading">
+
+                <h2>Account Information</h2>
+
+                <p>
+                    Your registered account details
+                </p>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <span class="label">
+                    Full Name
+                </span>
+
+                <span class="value">
+                    {{ user["name"] }}
+                </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <span class="label">
+                    Email Address
+                </span>
+
+                <span class="value">
+                    {{ user["email"] }}
+                </span>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= UPDATE NAME ================= -->
+
+        <section class="profile-card">
+
+            <div class="card-heading">
+
+                <h2>Update Name</h2>
+
+                <p>
+                    Change the name associated with your account.
+                </p>
+
+            </div>
+
+
+            <form method="POST">
+
+                <input type="hidden"
+                       name="action"
+                       value="update_name">
+
+
+                <div class="form-group">
+
+                    <label for="name">
+                        Full Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        value="{{ user['name'] }}"
+                        placeholder="Enter your name"
+                        required
+                    >
+
+                </div>
+
+
+                <button type="submit" class="primary-btn">
+                    Update Name
+                </button>
+
+            </form>
+
+        </section>
+
+
+        <!-- ================= CHANGE PASSWORD ================= -->
+
+        <section class="profile-card">
+
+            <div class="card-heading">
+
+                <h2>Change Password</h2>
+
+                <p>
+                    Update your account password.
+                </p>
+
+            </div>
+
+
+            <form method="POST">
+
+                <input type="hidden"
+                       name="action"
+                       value="change_password">
+
+
+                <div class="form-group">
+
+                    <label for="current_password">
+                        Current Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="current_password"
+                        name="current_password"
+                        placeholder="Enter current password"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="new_password">
+                        New Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="new_password"
+                        name="new_password"
+                        placeholder="Enter new password"
+                        minlength="6"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="confirm_password">
+                        Confirm New Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="confirm_password"
+                        name="confirm_password"
+                        placeholder="Confirm new password"
+                        minlength="6"
+                        required
+                    >
+
+                </div>
+
+
+                <button type="submit" class="primary-btn">
+                    Change Password
+                </button>
+
+            </form>
+
+        </section>
+
+
+        <!-- ================= BACK ================= -->
+
+        <div class="back-section">
+
+            <a href="{{ url_for('dashboard') }}">
+                ← Back to Dashboard
+            </a>
+
+        </div>
+
+    </main>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <p>
+            © 2026 Loan Approval System
+        </p>
+
+    </footer>
+
+</body>
+
+</html>
